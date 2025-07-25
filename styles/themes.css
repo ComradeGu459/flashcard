@@ -1,0 +1,20 @@
+/* 主题样式：根据 data-theme 属性切换 */
+
+/* 黑暗模式变量 */
+:root[data-theme="dark"] {
+  --color-bg: #1a1d24;
+  --color-surface: #252a33;
+  --color-primary: #42a5f5;
+  --color-secondary: #2f343f;
+  --color-accent: #ffb347;
+  --color-text: #e0e0e0;
+  --color-text-light: #a0a0a0;
+  --color-danger: #ef5350;
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  --icon-filter: invert(1);
+}
+
+/* 明亮模式变量：data-theme="light" 默认值已在 main.css 中定义，因此无需再次定义。此处可针对特定元素进行微调。 */
+:root[data-theme="light"] {
+  --icon-filter: none;
+}

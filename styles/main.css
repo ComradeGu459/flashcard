@@ -1,0 +1,394 @@
+/*
+ * 全局样式与布局
+ */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  overflow: hidden;
+}
+
+/* CSS 变量定义，默认使用浅色主题 */
+:root {
+  --color-bg: #fdfdfd;
+  --color-surface: #ffffff;
+  --color-primary: #0099cc;
+  --color-secondary: #f0f0f0;
+  --color-accent: #ffb347;
+  --color-text: #333333;
+  --color-text-light: #777777;
+  --color-danger: #e74c3c;
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --border-radius: 6px;
+  --transition-duration: 0.2s;
+}
+
+body.dark {
+  /* 此类在 JS 中动态添加，用于强制黑暗模式 */
+}
+
+/* 标题栏 */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow);
+  z-index: 1000;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.app-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color var(--transition-duration);
+}
+.icon-btn:hover {
+  background-color: var(--color-secondary);
+}
+.icon-btn img {
+  width: 1.25rem;
+  height: 1.25rem;
+  filter: var(--icon-filter, none);
+}
+
+/* 布局容器 */
+.app-container {
+  display: flex;
+  height: calc(100% - 56px);
+  overflow: hidden;
+}
+
+/* 侧边栏 */
+.sidebar {
+  width: 240px;
+  background-color: var(--color-surface);
+  border-right: 1px solid var(--color-secondary);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  transition: width var(--transition-duration);
+}
+
+.sidebar-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-secondary);
+}
+
+.category-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.category-list li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color var(--transition-duration);
+}
+.category-list li:hover,
+.category-list li.active {
+  background-color: var(--color-secondary);
+}
+
+/* 主内容区域 */
+.main-content {
+  flex: 1;
+  background-color: var(--color-bg);
+  overflow-y: auto;
+  position: relative;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* 卡片列表 */
+.card-list {
+  position: relative;
+  min-height: 100%;
+}
+
+.card-item {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--border-radius);
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform var(--transition-duration) ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-item:hover {
+  transform: translateY(-2px);
+}
+.card-item .card-front-preview {
+  flex: 1;
+  color: var(--color-text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.card-item .card-meta {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  white-space: nowrap;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 1rem;
+  color: var(--color-text-light);
+}
+
+/* 按钮样式 */
+.primary-btn,
+.secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color var(--transition-duration), color var(--transition-duration);
+}
+
+/* 控制按钮内的图标尺寸 */
+.primary-btn img,
+.secondary-btn img {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+.primary-btn {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+.primary-btn:hover {
+  background-color: #007ea9;
+}
+.secondary-btn {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+}
+.secondary-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* 模态框 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-content {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-footer {
+  border-top: 1px solid var(--color-secondary);
+  border-bottom: none;
+}
+.modal-body {
+  padding: 1rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-text-light);
+}
+.close-btn:hover {
+  color: var(--color-text);
+}
+
+/* 卡片翻转效果 */
+.card-flip {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  perspective: 1000px;
+}
+
+.card-flip .card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 1rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.card-front {
+  background-color: var(--color-surface);
+}
+.card-back {
+  background-color: var(--color-surface);
+  transform: rotateY(180deg);
+}
+
+.card-flip.flip .card-front {
+  transform: rotateY(180deg);
+}
+.card-flip.flip .card-back {
+  transform: rotateY(360deg);
+}
+
+/* 管理模态特殊布局 */
+.manage-modal-content {
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+}
+.manage-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.manage-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.manage-toolbar input[type="text"] {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+}
+.manage-toolbar select {
+  padding: 0.5rem;
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--border-radius);
+}
+.manage-table {
+  overflow-y: auto;
+  max-height: 50vh;
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--border-radius);
+}
+
+/* 编辑模态 */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.edit-form label {
+  font-weight: 600;
+}
+.edit-form textarea,
+.edit-form input {
+  padding: 0.5rem;
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--border-radius);
+  resize: vertical;
+}
+.edit-form textarea {
+  min-height: 70px;
+}
+
+/* Toast */
+.toast-container {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+.toast {
+  background-color: var(--color-surface);
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeInOut 3s forwards;
+}
+.toast.error {
+  background-color: var(--color-danger);
+  color: #fff;
+}
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(10px); }
+  10%, 90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}

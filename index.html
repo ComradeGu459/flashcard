@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>考研闪卡大师</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/components.css" />
+  <link rel="stylesheet" href="styles/themes.css" />
+  <link rel="icon" type="image/png" href="assets/icon-192.png" />
+</head>
+<body>
+  <!-- Header -->
+  <header id="app-header" class="app-header">
+    <h1 class="app-title">考研闪卡大师</h1>
+    <div class="app-actions">
+      <button id="btn-notify" class="icon-btn" title="提醒"><img src="assets/icons/bell.svg" alt="notify" /></button>
+      <button id="btn-lang" class="icon-btn" title="语言"><img src="assets/icons/globe.svg" alt="language" /></button>
+      <button id="btn-theme" class="icon-btn" title="主题"><img src="assets/icons/moon.svg" alt="theme" /></button>
+      <button id="btn-manage" class="icon-btn" title="题库管理"><img src="assets/icons/folder.svg" alt="manage" /></button>
+    </div>
+  </header>
+
+  <!-- Main layout: sidebar + content -->
+  <div class="app-container">
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <button id="btn-add-card" class="primary-btn full-width"><img src="assets/icons/plus.svg" alt="add" /> 添加卡片</button>
+      </div>
+      <ul id="category-list" class="category-list"></ul>
+    </nav>
+    <main id="main-content" class="main-content">
+      <!-- Card list (virtualized) -->
+      <div id="card-list" class="card-list"></div>
+      <!-- Empty state -->
+      <div id="empty-state" class="empty-state hidden">
+        <p>暂无卡片，点击左侧“添加卡片”开始学习！</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Card modal -->
+  <div id="card-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">闪卡</h2>
+        <button id="modal-close" class="close-btn">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="card-flip" class="card-flip">
+          <div class="card-face card-front" id="modal-front"></div>
+          <div class="card-face card-back" id="modal-back"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-hard" class="secondary-btn">困难</button>
+        <button id="btn-medium" class="secondary-btn">模糊</button>
+        <button id="btn-easy" class="primary-btn">清晰</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manage modal -->
+  <div id="manage-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content manage-modal-content">
+      <div class="modal-header">
+        <h2>题库管理</h2>
+        <button id="manage-close" class="close-btn">×</button>
+      </div>
+      <div class="modal-body">
+        <!-- Controls -->
+        <div class="manage-controls">
+          <button id="btn-import" class="secondary-btn"><img src="assets/icons/upload.svg" alt="import" /> 导入</button>
+          <button id="btn-export" class="secondary-btn"><img src="assets/icons/download.svg" alt="export" /> 导出</button>
+          <button id="btn-generate" class="secondary-btn"><img src="assets/icons/magic.svg" alt="generate" /> AI生成</button>
+          <button id="btn-stats" class="secondary-btn"><img src="assets/icons/chart-pie.svg" alt="stats" /> 统计</button>
+        </div>
+        <!-- Search and sort -->
+        <div class="manage-toolbar">
+          <input type="text" id="search-input" placeholder="搜索卡片..." />
+          <select id="sort-select">
+            <option value="due">按复习时间</option>
+            <option value="ease">按掌握度</option>
+            <option value="front">按题干</option>
+            <option value="error">按错题数</option>
+          </select>
+        </div>
+        <!-- Table -->
+        <div id="manage-table" class="manage-table"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-add-new" class="primary-btn">新增卡片</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit card modal -->
+  <div id="edit-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content edit-modal-content">
+      <div class="modal-header">
+        <h2 id="edit-title">新增卡片</h2>
+        <button id="edit-close" class="close-btn">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-form" class="edit-form">
+          <label for="edit-front">正面:</label>
+          <textarea id="edit-front" required></textarea>
+          <label for="edit-back">背面:</label>
+          <textarea id="edit-back" required></textarea>
+          <label for="edit-category">科目:</label>
+          <input type="text" id="edit-category" list="category-datalist" />
+          <datalist id="category-datalist"></datalist>
+          <label for="edit-chapter">章节:</label>
+          <input type="text" id="edit-chapter" />
+          <label for="edit-tags">标签 (逗号分隔):</label>
+          <input type="text" id="edit-tags" />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="edit-save" class="primary-btn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script type="module" src="scripts/app.js"></script>
+</body>
+</html>
